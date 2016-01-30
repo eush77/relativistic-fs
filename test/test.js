@@ -1,30 +1,33 @@
 'use strict';
 
-var fs = require('./lib/fs-intercept');
-
-var test = require('tape'),
-    relative = require('path').relative.bind(null, process.cwd()),
-    absolute = require('path').resolve;
-
-
-fs = fs();
 var rfs = require('..');
 
+var test = require('tape'),
+    sinon = require('sinon');
 
-test('fs methods', function (t) {
-  fs.once('writeFileSync', function () {
-    t.deepEqual([].slice.call(arguments), [
-      relative(__filename),
-      absolute(__filename),
-      options,
-      callback
-    ], 'called with modified path arguments');
-    t.end();
-  });
+var fs = require('fs'),
+    path = require('path');
 
-  var path = absolute(__filename);
-  var options = { encoding: 'utf8' };
-  var callback = function () { t.fail() };
 
-  rfs.writeFileSync(path, path, options, callback);
+var data = {
+  absolutePath: path.resolve(__filename),
+  relativePath: path.relative(process.cwd(), __filename),
+  data: path.resolve(__filename), // Try to fool naive string-sniffing approach.
+  options: { encoding: 'utf8' },
+  callback: sinon.stub().throws(),
+  result: Object()
+};
+
+
+test('writeFileSync', function (t) {
+  var stub = sinon.stub(fs, 'writeFileSync').returns(data.result);
+  var result = rfs.writeFileSync(data.absolutePath, data.data, data.options);
+
+  t.true(stub.calledOnce, 'should call fs function only once');
+  t.true(stub.calledWithExactly(data.relativePath, data.data, data.options),
+         'should modify path arguments');
+  t.equal(result, data.result, 'should pass the result through');
+  t.end();
+
+  stub.restore();
 });
