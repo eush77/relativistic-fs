@@ -17,7 +17,7 @@ var data = {
     // Fool the naive string-sniffing approach.
     buffer: path.resolve(__filename),
     number: 14,
-    mode: 0o444,
+    mode: Number.parseInt('444', 8),
     flags: 'r+',
     uid: 512,
     symlinkType: 'file',
