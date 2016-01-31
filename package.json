@@ -1,6 +1,6 @@
 {
   "name": "relativistic-fs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "fs wrapper to force relative paths",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
