@@ -1,33 +1,29 @@
 'use strict';
 
-var rfs = require('..');
+var stubFs = require('./lib/stubfs'),
+    rfs = require('..'),
+    catalog = require('../lib/catalog'),
+    data = require('./lib/data');
 
-var test = require('tape'),
-    sinon = require('sinon');
-
-var fs = require('fs'),
-    path = require('path');
-
-
-var data = {
-  absolutePath: path.resolve(__filename),
-  relativePath: path.relative(process.cwd(), __filename),
-  data: path.resolve(__filename), // Try to fool naive string-sniffing approach.
-  options: { encoding: 'utf8' },
-  callback: sinon.stub().throws(),
-  result: Object()
-};
+var test = require('tape');
 
 
-test('writeFileSync', function (t) {
-  var stub = sinon.stub(fs, 'writeFileSync').returns(data.result);
-  var result = rfs.writeFileSync(data.absolutePath, data.data, data.options);
+Object.keys(catalog).forEach(function (funcName) {
+  var argTypes = catalog[funcName];
+  var stub = stubFs[funcName];
 
-  t.true(stub.calledOnce, 'should call fs function only once');
-  t.true(stub.calledWithExactly(data.relativePath, data.data, data.options),
-         'should modify path arguments');
-  t.equal(result, data.result, 'should pass the result through');
-  t.end();
+  if (!stub.isSinonProxy) {
+    throw Error('Function not stubbed: ' + funcName);
+  }
 
-  stub.restore();
+  test(funcName, function (t) {
+    var result = rfs[funcName].apply(data.this, data.inputArgs(argTypes));
+
+    t.true(stub.calledOnce, 'should call fs function only once');
+    t.true(stub.calledOn(data.this), 'should call in the same context');
+    t.true(stub.calledWithExactly.apply(stub, data.outputArgs(argTypes)),
+           'should modify path arguments');
+    t.equal(result, data.result, 'should pass the result through');
+    t.end();
+  });
 });

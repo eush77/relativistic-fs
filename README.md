@@ -47,13 +47,17 @@ See?
 
 ### `rfs = require('relativistic-fs')`
 
-`relativistic-fs` wraps all functions from the [core fs][fs] module and exports them under the same name and interface:
+`relativistic-fs` exports all functions from the [core fs][fs] module under the same name and interface:
 
 ```js
 rfs.readdir(__dirname, function (err, files) {
   // ...
 });
 ```
+
+Functions that are wrapped to transform path arguments:
+
+- `writeFileSync(file, data[, options])`
 
 ### `rfs.install()`
 
