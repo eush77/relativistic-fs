@@ -1,7 +1,8 @@
 'use strict';
 
 var catalog = require('./lib/catalog'),
-    types = require('./lib/types');
+    types = require('./lib/types'),
+    install = require('./lib/install');
 
 var fs = require('fs'),
     relative = require('path').relative;
@@ -37,3 +38,4 @@ function isFd (path) {
 
 
 module.exports = rfs;
+module.exports.install = install;

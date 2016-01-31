@@ -57,7 +57,9 @@ rfs.readdir(__dirname, function (err, files) {
 
 ### `rfs.install()`
 
-Replace the core [fs] module with `relativistic-fs` so that any subsequent `require('fs')` calls return `rfs`. (Modifies [require.cache].)
+Replaces the core [fs] module with `relativistic-fs` so that any subsequent `require('fs')` calls return `rfs`. (Modifies [require.cache].)
+
+Returns `rfs`.
 
 [require.cache]: https://nodejs.org/api/globals.html#globals_require_cache
 
