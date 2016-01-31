@@ -15,6 +15,12 @@ var data = {
   ordinary: {
     // Fool the naive string-sniffing approach.
     buffer: path.resolve(__filename),
+    number: 14,
+    mode: 0o444,
+    flags: 'r+',
+    uid: 512,
+    symlinkType: 'file',
+    timestamp: '123456789',
     options: { encoding: 'utf8' },
     callback: sinon.stub().throws()
   }

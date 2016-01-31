@@ -47,7 +47,7 @@ See?
 
 ### `rfs = require('relativistic-fs')`
 
-`relativistic-fs` exports all functions from the [core fs][fs] module under the same name and interface:
+`relativistic-fs` exposes all functions from the [core fs][fs] module under the same name and interface:
 
 ```js
 rfs.readdir(__dirname, function (err, files) {
@@ -55,15 +55,62 @@ rfs.readdir(__dirname, function (err, files) {
 });
 ```
 
-Functions that are wrapped to transform path arguments:
-
-- `writeFileSync(file, data[, options])`
-
 ### `rfs.install()`
 
 Replace the core [fs] module with `relativistic-fs` so that any subsequent `require('fs')` calls return `rfs`. (Modifies [require.cache].)
 
 [require.cache]: https://nodejs.org/api/globals.html#globals_require_cache
+
+## Wrapped functions
+
+Functions that are wrapped to transform path arguments:
+
+- `access(path[, mode], callback)`
+- `accessSync(path[, mode])`
+- `chmod(path, mode, callback)`
+- `chmodSync(path, mode)`
+- `chown(path, uid, gid, callback)`
+- `chownSync(path, uid, gid)`
+- `createReadStream(path[, options])`
+- `createWriteStream(path[, options])`
+- `exists(path, callback)`
+- `existsSync(path)`
+- `lchmod(path, mode, callback)`
+- `lchmodSync(path, mode)`
+- `lchown(path, uid, gid, callback)`
+- `lchownSync(path, uid, gid)`
+- `link(srcpath, dstpath, callback)`
+- `linkSync(srcpath, dstpath)`
+- `lstat(path, callback)`
+- `lstatSync(path)`
+- `mkdir(path[, mode], callback)`
+- `mkdirSync(path[, mode])`
+- `open(path, flags[, mode], callback)`
+- `openSync(path, flags[, mode])`
+- `readdir(path, callback)`
+- `readdirSync(path)`
+- `readlink(path, callback)`
+- `readlinkSync(path)`
+- `realpath(path[, cache], callback)`
+- `realpathSync(path[, cache])`
+- `rename(oldPath, newPath, callback)`
+- `renameSync(oldPath, newPath)`
+- `rmdir(path, callback)`
+- `rmdirSync(path)`
+- `stat(path, callback)`
+- `statSync(path)`
+- `symlink(target, path[, type], callback)`
+- `symlinkSync(target, path[, type])`
+- `truncate(path, len, callback)`
+- `truncateSync(path, len)`
+- `unlink(path, callback)`
+- `unlinkSync(path)`
+- `unwatchFile(filename[, listener])`
+- `utimes(path, atime, mtime, callback)`
+- `utimesSync(path, atime, mtime)`
+- `watch(filename[, options][, listener])`
+- `watchFile(filename[, options], listener)`
+- `writeFileSync(file, data[, options])`
 
 ## What's up with the name?
 

@@ -1,23 +1,22 @@
 'use strict';
 
-var stubFs = require('./lib/stubfs'),
-    rfs = require('..'),
+var rfs = require('..'),
     catalog = require('../lib/catalog'),
     data = require('./lib/data');
 
-var test = require('tape');
+var test = require('tape'),
+    sinon = require('sinon');
+
+var fs = require('fs');
 
 
 Object.keys(catalog).forEach(function (funcName) {
   var argTypes = catalog[funcName];
-  var stub = stubFs[funcName];
-
-  if (!stub.isSinonProxy) {
-    throw Error('Function not stubbed: ' + funcName);
-  }
 
   test(funcName, function (t) {
+    var stub = sinon.stub(fs, funcName).returns(data.result);
     var result = rfs[funcName].apply(data.this, data.inputArgs(argTypes));
+    stub.restore();
 
     t.true(stub.calledOnce, 'should call fs function only once');
     t.true(stub.calledOn(data.this), 'should call in the same context');
