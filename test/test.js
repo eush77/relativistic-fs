@@ -46,3 +46,23 @@ Object.keys(catalog).forEach(function (funcName) {
     };
   }
 });
+
+
+test('delegates everything else to fs', function (t) {
+  t.equal(rfs.ReadStream, fs.ReadStream, 'ReadStream');
+  t.equal(rfs.WriteStream, fs.WriteStream, 'WriteStream');
+  t.equal(rfs.Stats, fs.Stats, 'Stats');
+  t.equal(rfs.FSWatcher, fs.FSWatcher, 'FSWatcher');
+
+  t.equal(rfs.F_OK, fs.F_OK, 'F_OK');
+  t.equal(rfs.R_OK, fs.R_OK, 'R_OK');
+  t.equal(rfs.W_OK, fs.W_OK, 'W_OK');
+  t.equal(rfs.X_OK, fs.X_OK, 'X_OK');
+
+  t.equal(rfs.close, fs.close, 'close');
+  t.equal(rfs.closeSync, fs.closeSync, 'closeSync');
+  t.equal(rfs.read, fs.read, 'read');
+  t.equal(rfs.readSync, fs.readSync, 'readSync');
+
+  t.end();
+});
