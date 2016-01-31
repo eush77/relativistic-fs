@@ -67,6 +67,8 @@ Functions that are wrapped to transform path arguments:
 
 - `access(path[, mode], callback)`
 - `accessSync(path[, mode])`
+- `appendFile(file, data[, options], callback)`
+- `appendFileSync(file, data[, options])`
 - `chmod(path, mode, callback)`
 - `chmodSync(path, mode)`
 - `chown(path, uid, gid, callback)`
@@ -87,6 +89,8 @@ Functions that are wrapped to transform path arguments:
 - `mkdirSync(path[, mode])`
 - `open(path, flags[, mode], callback)`
 - `openSync(path, flags[, mode])`
+- `readFile(file[, options], callback)`
+- `readFileSync(file[, options])`
 - `readdir(path, callback)`
 - `readdirSync(path)`
 - `readlink(path, callback)`
@@ -110,6 +114,7 @@ Functions that are wrapped to transform path arguments:
 - `utimesSync(path, atime, mtime)`
 - `watch(filename[, options][, listener])`
 - `watchFile(filename[, options], listener)`
+- `writeFile(file, data[, options], callback)`
 - `writeFileSync(file, data[, options])`
 
 ## What's up with the name?

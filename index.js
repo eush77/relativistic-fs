@@ -14,12 +14,26 @@ Object.keys(catalog).forEach(function (funcName) {
 
   rfs[funcName] = function () {
     var args = [].map.call(arguments, function (arg, index) {
-      return (argTypes[index] === types.path)
-        ? relative(process.cwd(), arg)
-        : arg;
+      switch (argTypes[index]) {
+        case types.path:
+          return relative(process.cwd(), arg);
+
+        case types.file:
+          return isFd(arg) ? arg : relative(process.cwd(), arg);
+
+        default:
+          return arg;
+      }
     });
     return fs[funcName].apply(this, args);
   };
 });
+
+
+// Copied from Node's source.
+function isFd (path) {
+  return (path >>> 0) === path;
+}
+
 
 module.exports = rfs;

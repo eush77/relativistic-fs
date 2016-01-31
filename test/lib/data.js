@@ -13,6 +13,7 @@ var data = {
   absolutePath: path.resolve(__filename),
   relativePath: path.relative(process.cwd(), __filename),
   ordinary: {
+    fd: 1,
     // Fool the naive string-sniffing approach.
     buffer: path.resolve(__filename),
     number: 14,
